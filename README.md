@@ -8,9 +8,8 @@ Graphviz can be installed from their official website - [graphviz.org/download](
 All the heavy lifting is done by Graphviz.
 1. Include the VGraph.h and VGraph.cpp in your build process.
 2. Initalize the `VGraph` class and provide a name for the dot file. Ex. `VGraph vg("file.dot");` 
-3. then set the number of parameters that you wish to be displayed via VGraph::setArgs function. Ex. `vg.setArgs(1);` 
-4. In your Recursive function at the very start specify the parameters that you want to display using VGraph::add function. Ex. `vg.add("number",std::to_string(i));`
--> the VGraph::add function has 2 overloads.
+3. then set the number of parameters that you wish to be displayed via VGraph::setArgs function. Ex.`vg.setArgs(1);` 
+4. In your Recursive function at the very start specify the parameters that you want to display using VGraph::add function. for example `vg.add("number",std::to_string(i));`. The VGraph::add function has 2 overloads.
    1. `void add(const std::string& title, const std::string& data)` here you can provide the title and parameter data as string.
    2. `void add(const std::string& title, const T& data, ftype func)` here you can provide title , data and a custom function that must return std::string and which takes in        data type T (function that converts the data of your type T into std::string) (some helper methods for this are defined in VgHelpers). 
 5. then inplace of return statement of your function either 
@@ -46,4 +45,6 @@ int main()
 	return 0;
 }
 ```
+Output svg file:
 
+![](./output.svg)
