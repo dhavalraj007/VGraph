@@ -2,8 +2,9 @@
 #include<string>
 #include<vector>
 #include<fstream>
-#define Vnreturn vg.end(); return
-#define Vreturn(x) auto __Vval = x;vg.end();return __Vval
+#include<unordered_map>
+#define Vnreturn {vg.end(); return;}
+#define Vreturn(x) auto __Vval = x;vg.end(to_string(__Vval));return __Vval
 
 namespace VgHelpers
 {
@@ -21,17 +22,19 @@ namespace VgHelpers
 	template<typename T>
 	std::string grid2str(const std::vector<std::vector<T>>& grid)
 	{
-		std::string ret;
+		std::string ret("\n");
 		for (auto row : grid)
 		{
 			for (auto ele : row)
 			{
-				ret += to_string(ele) + " ";
+				ret += to_string(ele) + "  ";
 			}
 			ret += "\n";
 		}
 		return ret;
 	}
+
+	std::string umapii2str(const std::unordered_map<int, int>& mp);
 }
 
 class VGraph
@@ -39,12 +42,14 @@ class VGraph
 	std::string dfilename;
 	std::string outfmt;
 	std::fstream file;
+	std::string id;	//current id
 	std::vector<std::string> dataVec;//holds ids
 	int nArgs = 0;
 	int nArgsProvided = 0;
 	std::string tempLabel = "";
 	int nNodes = 0;
 public:
+	
 	inline void setArgs(int _nArgs) { nArgs = _nArgs; }
 	//Open the file,(initialize fstream)
 	VGraph(const std::string& dfilename);
@@ -57,10 +62,13 @@ public:
 	void add(const std::string& title, const T& data, ftype func);
 	//strand ended thus remove last element from vector
 	void end();
+	void end(const std::string& returnVal);
 	//end the dot file with '}'
 	void finish();
 	//end the dot file with '}' and launch it
 	void fLaunch();
+	//debugbreak
+	void breakAtID(int _id);
 };
 
 //func should convert data to string
